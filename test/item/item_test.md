@@ -7,7 +7,7 @@ Tests are organized by user stories with clear acceptance criteria, ensuring all
 The suite includes 21 tests across 4 separate test files covering 3 user stories and implementation level tests.
 
 ## Test Structure
-- **Main Test Runner**: `test/item/test_base_item.py` (imports and runs all tests)
+- **Main Test Runner**: `test/item/test_item.py` (imports and runs all tests)
 - **User Story Files**: Individual test files for each user story (3 files)
 - **Implementation Tests**: `test/item/test_item_implementation.py` (detailed class coverage)
 - **Total Tests**: 21 test cases across 4 separate test files
@@ -20,7 +20,7 @@ The suite includes 21 tests across 4 separate test files covering 3 user stories
 . venv/Scripts/activate
 
 # Run all item tests
-python -m pytest test/item/test_base_item.py -v
+python -m pytest test/item/test_item.py -v
 
 # Run all tests in item directory
 python -m pytest test/item/ -v
