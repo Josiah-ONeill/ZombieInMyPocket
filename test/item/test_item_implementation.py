@@ -7,6 +7,7 @@ from src.enums_and_types import ItemName, ItemType
 
 
 class TestBaseItem(unittest.TestCase):
+    """Test class for BaseItem implementation details."""
 
     def test_base_item_initialization(self):
         # Arrange & Act
@@ -97,6 +98,7 @@ class TestBaseItem(unittest.TestCase):
 
 
 class TestConsumableItem(unittest.TestCase):
+    """Test class for ConsumableItem implementation details."""
 
     def test_consumable_item_initialization(self):
         # Arrange & Act
@@ -129,6 +131,7 @@ class TestConsumableItem(unittest.TestCase):
 
 
 class TestWeaponItem(unittest.TestCase):
+    """Test class for WeaponItem implementation details."""
 
     def test_weapon_item_initialization(self):
         # Arrange & Act
@@ -172,6 +175,7 @@ class TestWeaponItem(unittest.TestCase):
 
 
 class TestCombinableItem(unittest.TestCase):
+    """Test class for CombinableItem implementation details."""
 
     def test_combinable_item_initialization(self):
         # Arrange & Act
@@ -192,6 +196,7 @@ class TestCombinableItem(unittest.TestCase):
 
 
 class TestSpecialWeaponItem(unittest.TestCase):
+    """Test class for SpecialWeaponItem implementation details."""
 
     def test_special_weapon_item_initialization(self):
         # Arrange & Act
@@ -257,7 +262,3 @@ class TestSpecialWeaponItem(unittest.TestCase):
 
         # Assert
         self.assertEqual(item.uses_remaining, 3)
-
-
-if __name__ == '__main__':
-    unittest.main()
