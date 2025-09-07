@@ -5,6 +5,7 @@ from src.model.turn import *
 from src.model.game_pieces import *
 from src.model.player import Player
 from src.model.game_time.game_time import GameTime
+from src.model.turn.turn_enums import Triggers
 from src.view.mock_ui import UserInterface
 
 class TestTurn(unittest.TestCase):
@@ -12,9 +13,9 @@ class TestTurn(unittest.TestCase):
     def setUp(self):
         """set up a turn to test"""
         self.user_interface = create_autospec(UserInterface)
-        self.player = Player()
-        self.game_time = GameTime()
-        self.game_pieces = GamePieces(self.game_time)
+        self.player = create_autospec(Player())
+        self.game_time = create_autospec(GameTime())
+        self.game_pieces = create_autospec(GamePieces(self.game_time))
         self.the_turn = Turn.create(
             self.game_pieces,
             self.player,
@@ -23,16 +24,35 @@ class TestTurn(unittest.TestCase):
         )
 
 
-    def assert_pre_start(self):
-        """Turn should start with no state"""
+    def jump_to_trigger(self, trigger, result = None):
+        """Jumps the turn to the given trigger"""
+        self.the_turn._flow.state_finished(
+            trigger = trigger,
+            result = result
+        )
+        self.the_turn._flow._change_state()
+
+
+    def assert_turn_reset(self):
+        """
+        Assert that the turn is in a fully reset state:
+        no active state in the flow
+        waiting for a callback
+        cannot be continued
+        """
+        self.assertIsNone(self.the_turn._flow._current_state)
         self.assertTrue(self.the_turn.is_waiting_for_callback())
         with self.assertRaisesRegex(RuntimeError, "Cannot continue turn while waiting for input."):
             self.the_turn.continue_turn()
 
 
     def test_turn_before_start(self):
-        """turn should start with no state"""
-        self.assert_pre_start()
+        """
+        given:  a new Turn instance
+        when:   no actions have been taken
+        then:   the turn should be in a reset state
+        """
+        self.assert_turn_reset()
 
 
     def test_turn_start(self):
@@ -47,40 +67,33 @@ class TestTurn(unittest.TestCase):
 
 
     def test_continue_turn(self):
-        """turn should move to the ready state then the get player tile state"""
+        """
+        given:  the turn has started
+        when:   the turn continues
+        Then:   the turn should continue to the next state
+        """
         self.the_turn.start_turn()
         self.the_turn.continue_turn()
         self.assertEqual(self.the_turn._flow._current_state.name.value, 'get_player_tile')
 
+        self.jump_to_trigger(Triggers.START_ENCOUNTERS)
+
+        self.assertEqual('get_dev_encounter', self.the_turn._flow._current_state.name.value)
+        self.the_turn.continue_turn()
+        self.assertEqual('run_encounter', self.the_turn._flow._current_state.name.value)
+
 
     def test_turn_after_stop(self):
-        """turn should move to pre_start with no state"""
+        """
+        given:  the turn is active
+        when:   the turn is ended
+        Then:   the turn should reset to its initial state
+        """
         self.the_turn.start_turn()
         self.the_turn.continue_turn()
         self.the_turn.continue_turn()
         self.the_turn.end_turn()
-        self.assert_pre_start()
-
-
-    def jump_to_trigger(self, trigger, result):
-        """Jumps the turn to the given trigger"""
-        self.the_turn._flow.state_finished(
-            trigger = trigger,
-            result = result
-        )
-        self.the_turn._flow._change_state()
-
-
-    def test_turn_advancement(self):
-        """
-        Given:  the game is running
-        When:   a Dev card is dawn
-        Then:   time must update according to the rule of Time Passes
-        """
-        self.jump_to_trigger()
-        self.assertEqual('get_dev_encounter', self.the_turn._flow._current_state.name.value)
-        self.the_turn.continue_turn()
-        self.assertEqual('run_encounter', self.the_turn._flow._current_state.name.value)
+        self.assert_turn_reset()
 
 
 if __name__ == '__main__':
