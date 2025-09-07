@@ -1,5 +1,6 @@
 from time import sleep
 from src.model import *
+from src.model.game_time.game_time import GameTime
 from src.view.mock_ui import UserInterface
 
 class GameController:
@@ -9,11 +10,12 @@ class GameController:
 
     def set_up(self):
         # a little bit hacky way to get stuff running just for now
-        the_game_pieces = GamePieces()
+        the_game_time = GameTime()
+        the_game_pieces = GamePieces(the_game_time)
         the_player = Player()
         the_ui = UserInterface()
 
-        self.the_turn = Turn.create(the_game_pieces, the_player, the_ui)
+        self.the_turn = Turn.create(the_game_pieces, the_player, the_ui, the_game_time)
 
 
 

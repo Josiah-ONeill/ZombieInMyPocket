@@ -10,17 +10,27 @@ from src.model.turn.turn_states import *
 
 class Turn(ITurn):
     """
-    Facade for managing a game turn.
+    Controls the flow of a turn from start to finish by calling on other
+    components in order to progress the turn.
 
-    Provides a simplified interface for starting, ending,
-    and progressing turns, as well as checking input state.
+    Responsibilities:
+        Coordinate with other components to advance the turn
+        Calls for input from the user in some cases
+
+    Limitations:
+        Does not decide win/loss conditions.
+        Does not decide whether the turn should continue after each step.
+            These decisions should be handled by other components.
+        Returns control frequently to allow higher-level checks.
     """
     def __init__(self, flow):
         self._flow: TurnFlow = flow
 
     #make the turn flow object
     @classmethod
-    def create(cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()):
+    def create(
+            cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
+    ) -> TurnFlow:
         """
         Create and initialize a new turn.
 
@@ -28,6 +38,7 @@ class Turn(ITurn):
             the_game_pieces: The game pieces involved in the turn.
             the_player: The player object.
             the_user_interface: The user interface to handle input/output.
+            the_game_time: The game time, optional for compatibility only.
 
         Returns:
             Turn: An initialized Turn instance with its turn flow set up.
