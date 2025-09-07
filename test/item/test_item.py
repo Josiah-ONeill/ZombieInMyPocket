@@ -1,51 +1,45 @@
-from unittest import TestCase
-from src.enums_and_types import ItemName
-from src.model.item import get_item, combine_items
+import unittest
+
+# Import all user story test suites
+from .test_single_use_items import TestSingleUseItems
+from .test_multi_use_items import TestMultiUseItems
+from .test_refilling_items_by_combination import (
+    TestRefillingItemsByCombination
+)
+from .test_item_implementation import (
+    TestBaseItem, TestConsumableItem, TestWeaponItem,
+    TestCombinableItem, TestSpecialWeaponItem
+)
 
 
-class TestItem(TestCase):
-    
-    def test_using_up_single_item(self):
-        can = get_item(ItemName.CAN_OF_SODA)
-        expected = 1
-        actual = can.uses_remaining
-        self.assertEqual(expected, actual)
+def load_user_story_tests():
+    """Load all user story test suites into a single test suite.
 
-        can.use()
-        expected = 0
-        actual = can.uses_remaining
-        self.assertEqual(expected, actual)
-    
-    def test_using_chainsaw_decrements_uses_remaining(self):
-        chainsaw = get_item(ItemName.CHAINSAW)
-        expected = 2
-        actual = chainsaw.uses_remaining
-        self.assertEqual(expected, actual)
+    This function creates a combined test suite that includes all user story
+    tests from their separate files, allowing them to be run as part of the
+    main test execution.
+    """
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
 
-        chainsaw.use()
-        expected = 1
-        actual = chainsaw.uses_remaining
-        self.assertEqual(expected, actual)
-    
-    def test_combining_gasoline_and_chainsaw(self):
-        chainsaw = get_item(ItemName.CHAINSAW)
-        gasoline = get_item(ItemName.GASOLINE)
-        chainsaw.use()
-        chainsaw.use()
+    # Add all user story test classes
+    suite.addTests(loader.loadTestsFromTestCase(TestSingleUseItems))
+    suite.addTests(loader.loadTestsFromTestCase(TestMultiUseItems))
+    suite.addTests(loader.loadTestsFromTestCase(
+        TestRefillingItemsByCombination
+    ))
 
-        expected = 0
-        actual = chainsaw.uses_remaining
-        self.assertEqual(expected, actual)
+    # Add all implementation test classes
+    suite.addTests(loader.loadTestsFromTestCase(TestBaseItem))
+    suite.addTests(loader.loadTestsFromTestCase(TestConsumableItem))
+    suite.addTests(loader.loadTestsFromTestCase(TestWeaponItem))
+    suite.addTests(loader.loadTestsFromTestCase(TestCombinableItem))
+    suite.addTests(loader.loadTestsFromTestCase(TestSpecialWeaponItem))
 
-        expected = 1
-        actual = gasoline.uses_remaining
-        self.assertEqual(expected, actual)
+    return suite
 
-        combine_items(chainsaw, gasoline)
-        expected = 2
-        actual = chainsaw.uses_remaining
-        self.assertEqual(expected, actual)
 
-        expected = 0
-        actual = gasoline.uses_remaining
-        self.assertEqual(expected, actual)
+if __name__ == '__main__':
+    # Run all tests: user story tests and implementation tests
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(load_user_story_tests())
