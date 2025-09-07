@@ -66,12 +66,9 @@ class ServiceMethods(Enum):
     CAN_PLACE_TILE = "can_place_tile"
     GET_TILE_POSITION = "get_tile_position"
     DRAW_DEV_CARD = "draw_dev_card"
-    DEV_CARDS_REMAINING = "dev_cards_remaining"
-    SHUFFLE_DEV_CARDS = "shuffle_dev_cards"
     GET_ENCOUNTER = "get_encounter"
     # for GameTime
     GET_CURRENT_TIME = "get_current_time"
-    INCREASE_TIME = "increase_current_time"
 
 
 class PendingTransition(TypedDict):

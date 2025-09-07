@@ -2,12 +2,13 @@
 from typing import Callable, Any, TYPE_CHECKING
 
 from .turn_enums import Triggers, ServiceNames, ServiceMethods, StateNames, PendingTransition
+from ..interfaces import ITurn
 
 if TYPE_CHECKING:
     from .state import State
 
 
-class TurnFlow:
+class TurnFlow(ITurn):
     """
     Tracks the state of a turn,
     the context of the state machine, in the State Design Pattern
@@ -47,14 +48,14 @@ class TurnFlow:
         #the context would use the transition_type to determine the next state
 
 
-    def start(self) -> None:
+    def start_turn(self) -> None:
         start_state = self._get_state_factory(Triggers.READY)
         if start_state is None:
             raise Exception(f"No start_state: use {Triggers.READY} trigger")
         self._current_state = self._enter_next_state(start_state)
 
 
-    def end(self) -> None:
+    def end_turn(self) -> None:
         """Resets the state to its initial state"""
         self._pending_transition = None
         self._current_state = None
@@ -126,7 +127,7 @@ class TurnFlow:
         return is_waiting
 
 
-    def handle_request(self, *args, **kwargs) -> None:
+    def continue_turn(self, *args, **kwargs) -> None:
         """handles incoming requests"""
         if self._current_state is None:
             raise Exception(f"No current state")
