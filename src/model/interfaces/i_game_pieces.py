@@ -7,7 +7,6 @@ components including development cards, tiles, and board placement logic.
 from abc import ABC, abstractmethod
 from .i_dev_card import IDevCard
 from .i_tile import ITile
-from ..game_time.game_time import ITime
 from src.enums_and_types import *
 
 
@@ -19,12 +18,8 @@ class IGamePieces(ABC):
     """
 
     @abstractmethod
-    def setup(self, time: ITime) -> None:
-        """Initialize the game pieces including shuffling decks.
-        
-        Args:
-            time: The game time manager
-        """
+    def setup(self) -> None:
+        """Initialize the game pieces including shuffling decks."""
         pass
 
     @abstractmethod
@@ -81,6 +76,16 @@ class IGamePieces(ABC):
         """
         pass
 
+    # @abstractmethod
+    # def can_place_tile(self, tile: ITile, tile_position: Position,
+    #                    player_position: Position, rotation: Rotation) -> bool:
+    #     pass
+
+    # @abstractmethod
+    # def place_tile(self, tile: ITile, position: Position,
+    #                rotation: Rotation) -> None:
+    #     pass
+
     @abstractmethod
     def can_place_tile(self, new_tile: ITile, new_exit: Direction,
                        placed_tile: ITile,
@@ -113,7 +118,7 @@ class IGamePieces(ABC):
 
     @abstractmethod
     def can_move_to_new_tile(self, placed_tile: ITile,
-                             placed_tile_exit: Direction) -> bool:
+                    placed_tile_exit: Direction) -> bool:
         """Check if the player can move to a tile through the given exit.
         
         Args:
