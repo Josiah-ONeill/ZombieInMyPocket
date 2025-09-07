@@ -30,7 +30,7 @@ class Turn(ITurn):
     @classmethod
     def create(
             cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
-    ) -> TurnFlow:
+    ) -> ITurn:
         """
         Create and initialize a new turn.
 
