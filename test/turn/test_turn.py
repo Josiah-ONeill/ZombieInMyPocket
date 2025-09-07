@@ -83,7 +83,7 @@ class TestTurn(unittest.TestCase):
         self.assertEqual('run_encounter', self.the_turn._flow._current_state.name.value)
 
 
-    def test_turn_after_stop(self):
+    def test_turn_after_end(self):
         """
         given:  the turn is active
         when:   the turn is ended

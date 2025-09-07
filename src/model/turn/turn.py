@@ -130,7 +130,7 @@ class Turn(ITurn):
 
         Sets the current state of the turn to `Ready` and begins the turn flow.
         """
-        self._flow.start()
+        self._flow.start_turn()
 
     def end_turn(self) -> None:
         """
@@ -139,7 +139,7 @@ class Turn(ITurn):
         Stops the turn flow and resets relevant values.
         `start_turn` must be called before running a new turn.
         """
-        self._flow.end()
+        self._flow.end_turn()
 
     def continue_turn(self) -> None:
         """
@@ -153,7 +153,7 @@ class Turn(ITurn):
         """
         if self._flow.is_waiting_for_callback():
             raise RuntimeError("Cannot continue turn while waiting for input.")
-        self._flow.handle_request()
+        self._flow.continue_turn()
 
     def is_waiting_for_callback(self) -> bool:
         """
