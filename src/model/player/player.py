@@ -87,6 +87,7 @@ class Player(IPlayer):
         """
         self.__player_impl.heal(amount)
 
+    @property
     def has_totem(self) -> bool:
         """Check if the player possesses the evil totem.
         

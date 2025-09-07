@@ -1,4 +1,5 @@
 """Get the players tile"""
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
 
@@ -42,3 +43,11 @@ class GetPlayerTile(State):
             result=self.result)
         self.context = None
         #Expected next state select_exit
+
+    def get_input_options(self) -> Any:
+        """No input options needed for getting player tile"""
+        return []
+
+    def get_prompt(self) -> str:
+        """No prompt needed for getting player tile"""
+        return "Getting current player location..."
