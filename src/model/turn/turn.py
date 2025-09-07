@@ -10,17 +10,27 @@ from src.model.turn.turn_states import *
 
 class Turn(ITurn):
     """
-    Facade for managing a game turn.
+    Controls the flow of a turn from start to finish by calling on other
+    components in order to progress the turn.
 
-    Provides a simplified interface for starting, ending,
-    and progressing turns, as well as checking input state.
+    Responsibilities:
+        Coordinate with other components to advance the turn
+        Calls for input from the user in some cases
+
+    Limitations:
+        Does not decide win/loss conditions.
+        Does not decide whether the turn should continue after each step.
+            These decisions should be handled by other components.
+        Returns control frequently to allow higher-level checks.
     """
     def __init__(self, flow):
         self._flow: TurnFlow = flow
 
     #make the turn flow object
     @classmethod
-    def create(cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()):
+    def create(
+            cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
+    ) -> ITurn:
         """
         Create and initialize a new turn.
 
@@ -28,6 +38,7 @@ class Turn(ITurn):
             the_game_pieces: The game pieces involved in the turn.
             the_player: The player object.
             the_user_interface: The user interface to handle input/output.
+            the_game_time: The game time, optional for compatibility only.
 
         Returns:
             Turn: An initialized Turn instance with its turn flow set up.
@@ -119,7 +130,7 @@ class Turn(ITurn):
 
         Sets the current state of the turn to `Ready` and begins the turn flow.
         """
-        self._flow.start()
+        self._flow.start_turn()
 
     def end_turn(self) -> None:
         """
@@ -128,7 +139,7 @@ class Turn(ITurn):
         Stops the turn flow and resets relevant values.
         `start_turn` must be called before running a new turn.
         """
-        self._flow.end()
+        self._flow.end_turn()
 
     def continue_turn(self) -> None:
         """
@@ -142,7 +153,7 @@ class Turn(ITurn):
         """
         if self._flow.is_waiting_for_callback():
             raise RuntimeError("Cannot continue turn while waiting for input.")
-        self._flow.handle_request()
+        self._flow.continue_turn()
 
     def is_waiting_for_callback(self) -> bool:
         """
