@@ -19,6 +19,7 @@ class Triggers(Enum):
     START_ENCOUNTERS = "start_encounters"
     RUN_ENCOUNTER = "run_encounter"
     DEV_ENCOUNTER_END = "dev_encounter_end"
+    START_TILE_ENCOUNTER = "start_tile_encounter"
     TILE_ENCOUNTER_END = "tile_encounter_end"
     COWER_ENCOUNTER_END = "cow_encounter_end"
 
@@ -38,14 +39,15 @@ class StateNames(Enum):
     GET_TILE_ENCOUNTER = "get_tile_encounter"
     GET_COWER_ENCOUNTER = "get_cower_encounter"
     RUN_ENCOUNTER = "run_encounter"
-    #testing
-    TEST_STATE = "test_state"
+
 
 #Services
 class ServiceNames(Enum):
+    GAME_TIME = "gameTime"
     PLAYER = "player"
     GAME_PIECES = "gamePieces"
-    UI = "ui"
+    UI = "ui" #this doesn't need to be the ui
+
 
 #Change the name of service methods here
 class ServiceMethods(Enum):
@@ -64,7 +66,12 @@ class ServiceMethods(Enum):
     CAN_PLACE_TILE = "can_place_tile"
     GET_TILE_POSITION = "get_tile_position"
     DRAW_DEV_CARD = "draw_dev_card"
+    DEV_CARDS_REMAINING = "dev_cards_remaining"
+    SHUFFLE_DEV_CARDS = "shuffle_dev_cards"
     GET_ENCOUNTER = "get_encounter"
+    # for GameTime
+    GET_CURRENT_TIME = "get_current_time"
+    INCREASE_TIME = "increase_current_time"
 
 
 class PendingTransition(TypedDict):
@@ -72,4 +79,3 @@ class PendingTransition(TypedDict):
     and any results from previous states to pass to it"""
     next_state: Callable[[], Any]
     previous_result: tuple[Any, ...] | None
-    next_tile: Any

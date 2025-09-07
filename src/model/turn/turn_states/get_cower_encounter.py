@@ -12,7 +12,7 @@ class GetCowerEncounter(State):
         self.needs_input = True
 
     @staticmethod
-    def get_cower_encounter():
+    def _get_cower_encounter():
         return encounters.CowerEncounter()
 
     def get_input_options(self):
@@ -25,7 +25,7 @@ class GetCowerEncounter(State):
         if selected_option == '0': #Input_options.YES.value:
             print("starting cower encounter")
             self.result = (
-                self.get_cower_encounter(),
+                self._get_cower_encounter(),
                 Triggers.COWER_ENCOUNTER_END
             )
             self.trigger = Triggers.RUN_ENCOUNTER

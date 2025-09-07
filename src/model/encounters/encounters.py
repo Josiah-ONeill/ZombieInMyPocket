@@ -1,11 +1,12 @@
+# Modified by David Watts to prevent errors in testing
+
 from abc import ABC, abstractmethod
-from typing import Callable
-from src.model.player.player import Player
+from ..interfaces.i_player import IPlayer
 
 class IEncounter(ABC):
     """Abstract Class for building other Encounter Classes"""
     @abstractmethod
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
         ...
 
 class HealthEncounter(IEncounter):
@@ -13,7 +14,7 @@ class HealthEncounter(IEncounter):
     def __init__(self, value):
         self.health = value
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
         player.heal(self.health)
         return player
 
@@ -22,7 +23,7 @@ class CowerEncounter(IEncounter):
     def __init__(self):
         self.health_increase = 3
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
         player.heal(self.health_increase)
         return player
 
@@ -31,7 +32,7 @@ class CombatEncounter(IEncounter):
     def __init__(self, value):
         self.zombies = value
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
         damage = self.zombies - player.attack_power
         if damage > 4:
             damage = 4
@@ -45,7 +46,7 @@ class ItemEncounter(IEncounter):
     def __init__(self, new_item):
         self.item = new_item
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
         player.add_item_to_inventory(self.item)
         return player
 
@@ -54,5 +55,15 @@ class MessageEncounter(IEncounter):
     def __init__(self, new_code):
         self.message_code = new_code
 
-    def handle_encounter(self, player) -> Player:
+    def handle_encounter(self, player) -> IPlayer:
+        pass
+
+class TotemEncounter(IEncounter):
+    """Handles Totem Encounters"""
+    def __init__(self, new_totem_state):
+        self.totem_state = new_totem_state
+
+    def handle_encounter(self, player) -> IPlayer:
+        # player.setTotem??
+        # return player
         pass

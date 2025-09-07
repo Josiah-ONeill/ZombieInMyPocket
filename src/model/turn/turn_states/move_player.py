@@ -11,7 +11,7 @@ class MovePlayer(State):
     """
     def __init__(self, name=StateNames.MOVE_PLAYER):
         super().__init__(name)
-        #self.the_tile = None
+        self.the_tile = None
         #self.selected_exit = None
 
 
@@ -21,13 +21,13 @@ class MovePlayer(State):
             #selected_exit
     ):
         self.trigger = Triggers.START_ENCOUNTERS
-        self.result = a_tile
+        self.the_tile = a_tile
         #self.the_tile = a_tile
         #self.selected_exit = selected_exit
 
 
 
-    def get_tile_position(self, a_tile):
+    def _get_tile_position(self, a_tile):
         #return 1, 0
         return self.use_service(
             ServiceNames.GAME_PIECES,
@@ -37,7 +37,7 @@ class MovePlayer(State):
         #error with get_tile_position
 
 
-    def move_player(self, position):
+    def _move_player(self, position):
         self.use_service(
             ServiceNames.PLAYER,
             ServiceMethods.SET_POSITION,
@@ -46,21 +46,9 @@ class MovePlayer(State):
 
 
     def handle_request(self, *arg, **kwarg):
-        self.move_player(self.get_tile_position(self.result))
-        self.exit()
-
-    def get_input_options(self) -> Any:
-        """No input options needed for moving player"""
-        return []
-
-    def get_prompt(self) -> str:
-        """No prompt needed for moving player"""
-        return "Moving player..."
+        self._move_player(self._get_tile_position(self.the_tile))
+        super().handle_request()
 
 
     def exit(self):
-        self.context.state_finished(
-            trigger=self.trigger,
-            result=None,
-            next_tile=self.result)
-        self.context = None
+        super().exit()

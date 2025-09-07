@@ -5,14 +5,16 @@ from ..enums_and_types.enums import MessageCode
 from ..view.interfaces.i_ui import IUI
 from ..model.player.player import Player
 from ..model.game_pieces.game_pieces import GamePieces
+from ..model.game_time.game_time import GameTime
 import time
 
 class GameController:
     def __init__(self, ui: IUI):
         self.game_status = GameStatus()
         self.ui = ui
+        game_time = GameTime()
         player = Player()
-        game_pieces = GamePieces()
+        game_pieces = GamePieces(game_time)
         self.the_turn = Turn.create(game_pieces, player, ui)
 
     def begin_game(self):
@@ -24,8 +26,8 @@ class GameController:
         while not self.game_status.is_game_over:
             self._process_and_display_messages()
             self._update_full_state()
-
-            if self.the_turn.is_wait_for_input():
+            
+            if self.the_turn.is_waiting_for_callback():
                 self._handle_input()
             else:
                  self._process_turn()
@@ -64,10 +66,12 @@ class GameController:
 
     def _update_full_state(self):
         """""Update the game display with current state"""""
-        player = self.the_turn._flow.service[ServiceNames.PLAYER]
-        game_pieces = self.the_turn._flow.service[ServiceNames.GAME_PIECES]
+        player = self.the_turn._flow._services[ServiceNames.PLAYER]
+        game_pieces = self.the_turn._flow._services[ServiceNames.GAME_PIECES]
         
-        active_tile = self.the_turn._flow.active_tile
+        player_pos = player.get_position()
+        active_tile = game_pieces.get_tile(player_pos)
+
         if active_tile:
             self.ui.display_game_state(
                 tile=active_tile,
