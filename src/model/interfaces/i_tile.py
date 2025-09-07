@@ -6,7 +6,7 @@ game board, including their exits, encounters, and special properties.
 
 from abc import ABC, abstractmethod
 from src.enums_and_types import *
-from ..encounters.encounters import IEncounter
+from src.model.interfaces.i_encounter import IEncounter #Edited by Alex L
 
 
 class ITile(ABC):
