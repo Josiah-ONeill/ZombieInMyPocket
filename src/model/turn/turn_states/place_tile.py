@@ -1,6 +1,9 @@
 """Places a tile"""
+
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
+from ....enums_and_types.enums import Rotation
 
 
 class PlaceTile(State):
@@ -47,6 +50,7 @@ class PlaceTile(State):
             self.trigger = Triggers.MOVE_PLAYER
             self._place_tile()
             self.result = (self.new_tile, )
+            self.exit()
         else:
             #go back to select exit state
             self.trigger = Triggers.SELECT_EXIT
@@ -58,7 +62,13 @@ class PlaceTile(State):
             )
             #This could become an end less loop....
 
-        super().handle_request()
+    def get_input_options(self) -> Any:
+        """Return the available rotations for placing the tile"""
+        return list(Rotation)
+
+    def get_prompt(self) -> str:
+        """Return the prompt for tile placement"""
+        return f"Choose rotation for placing {self.new_tile.get_name() if self.new_tile else ''}"
 
 
     def exit(self):

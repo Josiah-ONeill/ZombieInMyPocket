@@ -1,3 +1,4 @@
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
 
@@ -10,7 +11,7 @@ class MovePlayer(State):
     """
     def __init__(self, name=StateNames.MOVE_PLAYER):
         super().__init__(name)
-        #self.the_tile = None
+        self.the_tile = None
         #self.selected_exit = None
 
 
@@ -20,7 +21,7 @@ class MovePlayer(State):
             #selected_exit
     ):
         self.trigger = Triggers.START_ENCOUNTERS
-        self.result = a_tile
+        self.the_tile = a_tile
         #self.the_tile = a_tile
         #self.selected_exit = selected_exit
 
@@ -45,13 +46,9 @@ class MovePlayer(State):
 
 
     def handle_request(self, *arg, **kwarg):
-        self._move_player(self._get_tile_position(self.result))
+        self._move_player(self._get_tile_position(self.the_tile))
         super().handle_request()
 
 
     def exit(self):
-        self.context.state_finished(
-            trigger=self.trigger,
-            result=None,
-            next_tile=self.result)
-        self.context = None
+        super().exit()

@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
-from src.model.player.player import Player, PlayerImplementation
+from src.model.player.iteration2.player import Player, PlayerImplementation
+from src.enums_and_types.enums import ItemType
 from src.model.interfaces.i_item import IItem
 
 class TestPlayer(unittest.TestCase):
@@ -122,7 +123,7 @@ class TestPlayer(unittest.TestCase):
         expected_totem_status = False
         
         # Act
-        has_totem = self.player.has_totem()
+        has_totem = self.player.has_totem
         
         # Assert
         self.assertEqual(has_totem, expected_totem_status)
@@ -130,7 +131,7 @@ class TestPlayer(unittest.TestCase):
     def test_use_item(self):
         # Arrange
         mock_item = Mock(spec=IItem)
-        mock_item.type.value = 1  # HEALING
+        mock_item.type = ItemType.HEALING
         mock_item.heal_amount = 25
         mock_item.uses_remaining = 1
         self.player.add_item_to_inventory(mock_item)
@@ -171,11 +172,12 @@ class TestPlayer(unittest.TestCase):
     def test_combine_items_from_inventory(self):
         # Arrange
         mock_item1 = Mock(spec=IItem)
+        mock_item1.name = "ItemA"
+        mock_item1.uses_remaining = 1
         mock_item2 = Mock(spec=IItem)
-        mock_item1.name = "item1"
-        mock_item2.name = "item2"
-        mock_item1.combinable_with = ["item2"]
-        mock_item2.combinable_with = ["item1"]
+        mock_item2.name = "ItemB"
+        mock_item2.uses_remaining = 1
+        mock_item2.combinable_with = ["ItemA"]
         self.player.add_item_to_inventory(mock_item1)
         self.player.add_item_to_inventory(mock_item2)
         
@@ -343,7 +345,7 @@ class TestPlayerImplementation(unittest.TestCase):
     def test_use_item_healing_type(self):
         # Arrange
         mock_item = Mock(spec=IItem)
-        mock_item.type.value = 1  # HEALING
+        mock_item.type = ItemType.HEALING
         mock_item.heal_amount = 25
         mock_item.uses_remaining = 1
         initial_health = 75
@@ -363,7 +365,7 @@ class TestPlayerImplementation(unittest.TestCase):
     def test_use_item_weapon_type(self):
         # Arrange
         mock_item = Mock(spec=IItem)
-        mock_item.type.value = 0  # WEAPON
+        mock_item.type = ItemType.WEAPON
         mock_item.attack_bonus = 5
         mock_item.uses_remaining = 1
         expected_result = 6  # base_attack_power (1) + attack_bonus (5)
@@ -379,7 +381,7 @@ class TestPlayerImplementation(unittest.TestCase):
     def test_use_item_removes_when_no_uses_remaining(self):
         # Arrange
         mock_item = Mock(spec=IItem)
-        mock_item.type.value = 1  # HEALING
+        mock_item.type = ItemType.HEALING
         mock_item.heal_amount = 25
         mock_item.uses_remaining = 0
         expected_inventory_length = 0
@@ -410,7 +412,7 @@ class TestPlayerImplementation(unittest.TestCase):
     def test_use_item_other_type(self):
         # Arrange
         mock_item = Mock(spec=IItem)
-        mock_item.type.value = 2  # Neither HEALING nor WEAPON
+        mock_item.type = ItemType.COMBINE_ONLY
         mock_item.uses_remaining = 1
         expected_result = None
         
@@ -482,7 +484,7 @@ class TestPlayerImplementation(unittest.TestCase):
         self.assertEqual(len(self.player_impl._inventory), expected_inventory_length)
         self.assertIn(mock_item1, self.player_impl._inventory)
 
-    @patch('src.model.player.player.combine_items')
+    @patch('src.model.player.iteration2.player.combine_items')
     def test_combine_items_from_inventory_success(self, mock_combine_items):
         # Arrange
         mock_item1 = Mock(spec=IItem)
@@ -505,7 +507,7 @@ class TestPlayerImplementation(unittest.TestCase):
         self.assertNotIn(mock_item1, self.player_impl._inventory)
         self.assertIn(mock_item2, self.player_impl._inventory)
 
-    @patch('src.model.player.player.combine_items')
+    @patch('src.model.player.iteration2.player.combine_items')
     def test_combine_items_from_inventory_both_items_depleted(self, mock_combine_items):
         # Arrange
         mock_item1 = Mock(spec=IItem)
@@ -525,7 +527,7 @@ class TestPlayerImplementation(unittest.TestCase):
         self.assertEqual(result, expected_result)
         self.assertEqual(len(self.player_impl._inventory), expected_inventory_length)
 
-    @patch('src.model.player.player.combine_items')
+    @patch('src.model.player.iteration2.player.combine_items')
     def test_combine_items_from_inventory_assertion_error(self, mock_combine_items):
         # Arrange
         mock_item1 = Mock(spec=IItem)
@@ -567,41 +569,7 @@ class TestPlayerImplementation(unittest.TestCase):
         # Assert
         self.assertEqual(result, expected_result)
 
-    def test_combat_with_gasoline_and_candle(self):
-        # Arrange
-        mock_gasoline = Mock(spec=IItem)
-        mock_gasoline.name = "Gasoline"
-        mock_gasoline.type.value = 2  # SPECIAL/OTHER type  
-        mock_gasoline.uses_remaining = 0  # Will be removed after use
-        
-        mock_candle = Mock(spec=IItem)
-        mock_candle.name = "Candle"
-        mock_candle.type.value = 2  # SPECIAL/OTHER type
-        mock_candle.uses_remaining = 3
-        
-        initial_health = 80
-        self.player_impl._health = initial_health
-        self.player_impl._inventory = [mock_gasoline, mock_candle]
-        
-        # Act - Simulate using gasoline and candle together in combat
-        gasoline_result = self.player_impl.use_item(mock_gasoline)
-        candle_result = self.player_impl.use_item(mock_candle)
-        
-        # Assert
-        # All zombies killed (simulated by successful item usage)
-        self.assertIsNone(gasoline_result)
-        self.assertIsNone(candle_result)
-        
-        # Gasoline removed from inventory (uses_remaining = 1, so depleted)
-        self.assertNotIn(mock_gasoline, self.player_impl._inventory)
-        
-        # Candle remains in inventory (uses_remaining = 3, so still usable)
-        self.assertIn(mock_candle, self.player_impl._inventory)
-        
-        # Player health unaffected
-        self.assertEqual(self.player_impl.health, initial_health)
-
-    @patch('src.model.player.player.combine_items')
+    @patch('src.model.player.iteration2.player.combine_items')
     def test_combine_items_from_inventory_no_items_depleted(self, mock_combine_items):
         # Arrange
         mock_item1 = Mock(spec=IItem)

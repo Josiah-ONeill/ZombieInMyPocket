@@ -1,5 +1,5 @@
 """Ready to start a turn"""
-#from typing import TYPE_CHECKING
+from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, Triggers
 
@@ -22,10 +22,18 @@ class Ready(State):
 
     def handle_request(self):
         """Wait before starting a new turn"""
-        #print(f'{'-'*10}starting a new turn{'-'*10}')
+        print(f'{'-'*10}starting a new turn{'-'*10}')
         super().handle_request()
 
 
     def exit(self):
         super().exit()
         #Expected next state Get player tile
+
+    def get_input_options(self) -> Any:
+        """Ready state doesn't need input options"""
+        return []
+
+    def get_prompt(self) -> str:
+        """Ready state doesn't need a prompt"""
+        return "Press Enter to start a new turn..."
