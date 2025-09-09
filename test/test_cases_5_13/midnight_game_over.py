@@ -12,22 +12,19 @@ class MidnightGameOver(unittest.TestCase):
     • Then the game ends and the player loses
     """
     def setUp(self):
-        self.game_over: IGameOver = GameOver()
-        self.expected_reason = GameOverReason.OUT_OF_TIME
-
-    def test_time_condition_false(self):
-        game_time = GameTime()
-        game_time.increase_current_time()
-        game_time.increase_current_time()
-        expected_state = game_time.is_time_valid()
-        self.assertEqual(expected_state, True)
+        self.game_time = GameTime()
 
     def test_time_condition_true(self):
-        game_time = GameTime()
-        game_time.increase_current_time()
-        game_time.increase_current_time()
-        game_time.increase_current_time()
-        expected_state = game_time.is_time_valid()
+        self.game_time.increase_current_time()
+        self.game_time.increase_current_time()
+        expected_state = self.game_time.is_time_valid()
+        self.assertEqual(expected_state, True)
+
+    def test_time_condition_false(self):
+        self.game_time.increase_current_time()
+        self.game_time.increase_current_time()
+        self.game_time.increase_current_time()
+        expected_state = self.game_time.is_time_valid()
         self.assertEqual(expected_state, False)
 
 if __name__ == '__main__':
