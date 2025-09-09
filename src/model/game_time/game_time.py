@@ -19,11 +19,11 @@ class GameTime(ITime):
     def __init__(self):
         self.time = 9
 
-    def get_current_time(self):
+    def get_current_time(self) -> int:
         return self.time
 
     def increase_current_time(self):
         self.time += 1
 
-    def is_time_valid(self):
+    def is_time_valid(self) -> bool:
         return True if self.time < 12 else False
