@@ -34,7 +34,7 @@ class CombatEncounter(IEncounter):
         self.zombies = value
 
     def handle_encounter(self, player) -> "Player":
-        damage = self.zombies - player.attack_power
+        damage = self.zombies - player.get_attack_power()
         if damage > 4:
             damage = 4
         elif damage < 0:
