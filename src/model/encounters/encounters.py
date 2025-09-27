@@ -1,13 +1,9 @@
 # Modified by David Watts to prevent errors in testing
 
 from abc import ABC, abstractmethod
-from ..interfaces.i_player import IPlayer
 
-class IEncounter(ABC):
-    """Abstract Class for building other Encounter Classes"""
-    @abstractmethod
-    def handle_encounter(self, player) -> IPlayer:
-        ...
+from ..interfaces.i_encounter import IEncounter
+from ..interfaces.i_player import IPlayer
 
 class HealthEncounter(IEncounter):
     """Handles Health Encounters"""
@@ -20,8 +16,10 @@ class HealthEncounter(IEncounter):
 
 class CowerEncounter(IEncounter):
     """Handles Cower Encounter"""
+    HEALTH_INCREASE = 3
+
     def __init__(self):
-        self.health_increase = 3
+        self.health_increase = self.HEALTH_INCREASE
 
     def handle_encounter(self, player) -> IPlayer:
         player.heal(self.health_increase)
@@ -29,15 +27,18 @@ class CowerEncounter(IEncounter):
 
 class CombatEncounter(IEncounter):
     """Handles Combat Encounters"""
+    MAX_DAMAGE = 4
+    MIN_DAMAGE = 0
+
     def __init__(self, value):
         self.zombies = value
 
     def handle_encounter(self, player) -> IPlayer:
         damage = self.zombies - player.get_attack_power()
-        if damage > 4:
-            damage = 4
-        elif damage < 0:
-            damage = 0
+        if damage > self.MAX_DAMAGE:
+            damage = self.MAX_DAMAGE
+        elif damage < self.MIN_DAMAGE:
+            damage = self.MIN_DAMAGE
         player.take_damage(damage)
         return player
         
