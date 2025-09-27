@@ -7,7 +7,7 @@ components including development cards, tiles, and board placement logic.
 from abc import ABC, abstractmethod
 from .i_dev_card import IDevCard
 from .i_tile import ITile
-from ..game_time.game_time import ITime
+from .i_time import ITime
 from src.enums_and_types import *
 
 
