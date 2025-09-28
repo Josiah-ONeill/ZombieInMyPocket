@@ -11,6 +11,8 @@ class HealthEncounter(IEncounter):
         self.health = value
 
     def handle_encounter(self, player) -> IPlayer:
+        if player is not IPlayer:
+            raise TypeError("Health Encounter can only be handled by a Player")
         player.heal(self.health)
         return player
 
@@ -22,6 +24,8 @@ class CowerEncounter(IEncounter):
         self.health_increase = self.HEALTH_INCREASE
 
     def handle_encounter(self, player) -> IPlayer:
+        if player is not IPlayer:
+            raise TypeError("Health Encounter can only be handled by a Player")
         player.heal(self.health_increase)
         return player
 
@@ -34,6 +38,8 @@ class CombatEncounter(IEncounter):
         self.zombies = value
 
     def handle_encounter(self, player) -> IPlayer:
+        if player is not IPlayer:
+            raise TypeError("Health Encounter can only be handled by a Player")
         damage = self.zombies - player.get_attack_power()
         if damage > self.MAX_DAMAGE:
             damage = self.MAX_DAMAGE
@@ -48,6 +54,8 @@ class ItemEncounter(IEncounter):
         self.item = new_item
 
     def handle_encounter(self, player) -> IPlayer:
+        if player is not IPlayer:
+            raise TypeError("Health Encounter can only be handled by a Player")
         player.add_item_to_inventory(self.item)
         return player
 
