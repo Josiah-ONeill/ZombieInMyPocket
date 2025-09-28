@@ -1,7 +1,8 @@
+import src.model.encounters.cower_encounter
 from src.enums_and_types.enums import Input_options
 from ..state import State
 from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
-from src.model.encounters import encounters
+from src.model.encounters import not_implemented_encounters
 
 class GetCowerEncounter(State):
     def __init__(self, name=StateNames.GET_COWER_ENCOUNTER):
@@ -13,7 +14,7 @@ class GetCowerEncounter(State):
 
     @staticmethod
     def _get_cower_encounter():
-        return encounters.CowerEncounter()
+        return src.model.encounters.cower_encounter.CowerEncounter()
 
     def get_input_options(self):
         return [Input_options.YES, Input_options.NO]

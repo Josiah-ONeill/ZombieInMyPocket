@@ -5,7 +5,7 @@ contain items and encounter information based on the game time.
 """
 
 from abc import ABC, abstractmethod
-from ..encounters.encounters import IEncounter
+from ..encounters.not_implemented_encounters import IEncounter
 from .i_item import IItem
 
 
