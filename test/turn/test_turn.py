@@ -6,13 +6,13 @@ from src.model.game_pieces import *
 from src.model.player import Player
 from src.model.game_time.game_time import GameTime
 from src.model.turn.turn_enums import Triggers
-from src.view.mock_ui import UserInterface
+from src.view.dummy_ui import DummyUI
 
 class TestTurn(unittest.TestCase):
     """tests for Turn (context and states"""
     def setUp(self):
         """set up a turn to test"""
-        self.user_interface = create_autospec(UserInterface)
+        self.user_interface = create_autospec(DummyUI)
         self.player = create_autospec(Player())
         self.game_time = create_autospec(GameTime())
         self.game_pieces = create_autospec(GamePieces(self.game_time))

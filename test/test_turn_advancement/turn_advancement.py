@@ -5,7 +5,7 @@ from src.model.turn.turn_enums import Triggers
 from src.model.game_pieces import *
 from src.model.game_time.game_time import GameTime
 from src.model.turn import *
-from src.view.mock_ui import UserInterface
+from src.view.dummy_ui import DummyUI
 from src.model.interfaces import IPlayer
 
 
@@ -17,7 +17,7 @@ class TestTurnAdvancement(unittest.TestCase):
     """
     def setUp(self):
         """set up a turn to test"""
-        self.user_interface = create_autospec(UserInterface)
+        self.user_interface = create_autospec(DummyUI)
         self.player = create_autospec(IPlayer)
         self.game_time = GameTime()
         self.game_pieces = GamePieces(self.game_time)
