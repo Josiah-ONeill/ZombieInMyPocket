@@ -1,4 +1,4 @@
-from typing import Protocol, Any, Callable
+from typing import Protocol, Any
 from src.enums_and_types.enums import Rotation
 
 class IUI(Protocol):
@@ -20,9 +20,9 @@ class IUI(Protocol):
         """Get input from the user."""
         ...
 
-    def get_input_with_callback(self, prompt: str, options: Any, 
-                              callback: Callable[[Any], None]) -> None:
-        """Get input and call the callback with the result."""
+    # def get_input_with_callback(self, prompt: str, options: Any,
+    #                           callback: Callable[[Any], None]) -> None:
+    #     """Get input and call the callback with the result."""
         ...
     
     def _get_rotation_text(self, rotation: Rotation) -> str:

@@ -56,11 +56,11 @@ class DummyUI(IUI):
             print("Invalid input! Please try again.")
 
 
-    def get_input_with_callback(self, prompt: str, options: Any, 
-                              callback: Callable) -> None:
-        """Get input and call the callback with the result"""
-        result = self.get_input(prompt, options)
-        callback(result)
+    # def get_input_with_callback(self, prompt: str, options: Any,
+    #                           callback: Callable) -> None:
+    #     """Get input and call the callback with the result"""
+    #     result = self.get_input(prompt, options)
+    #     callback(result)
 
 
     def _get_rotation_text(self, rotation: Rotation) -> str:

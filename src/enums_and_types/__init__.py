@@ -1,4 +1,11 @@
-from .enums import Rotation, Direction, ItemType, ItemName
+
+from .enums import (
+    Rotation,
+    Direction,
+    ItemType,
+    ItemName,
+    MessageCode
+)
 from .types import Position
 from .game_over_reason import GameOverReason
 
@@ -10,4 +17,6 @@ __all__ = [
     'ItemName',
     'Position',
     'GameOverReason',
+    'MessageCode',
+
 ]
