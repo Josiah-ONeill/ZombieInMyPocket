@@ -67,14 +67,14 @@ class Turn(ITurn):
             cls,
             the_game_pieces,
             the_player,
-            the_ui,
+            the_controller,
             the_game_time
     ) -> dict[ServiceNames, object]:
         """Get the services used by the turn"""
         return {
             ServiceNames.GAME_PIECES:   the_game_pieces,
             ServiceNames.PLAYER:        the_player,
-            ServiceNames.UI:            the_ui,
+            ServiceNames.CONTROLLER:    the_controller,
             ServiceNames.GAME_TIME:     the_game_time
         }
 

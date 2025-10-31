@@ -3,8 +3,8 @@
 from typing import Any, Callable
 
 from src.enums_and_types import MessageCode
-from src.model import *
-from src.view import *
+from src.model import GameStatus, GamePieces, GameTime, Player, Turn
+from src.view import DummyUI
 
 class GameController:
     def __init__(self):
@@ -62,19 +62,18 @@ class GameController:
 
     def _update_full_state(self):
         """""Update the game display with current state"""""
-
-        
-        player_pos = self.player.get_position()
-        active_tile = self.game_pieces.get_tile(player_pos)
-
-        if active_tile:
-            self.ui.display_game_state(
-                tile=active_tile,
-                tile_position=self.game_pieces.get_tile_position(active_tile),
-            )
+        # active_tile = self.game_pieces.get_tile(self.player.get_position())
+        #
+        # if active_tile:
+        #     self.ui.display_game_state(
+        #         tile=active_tile,
+        #         tile_position=self.game_pieces.get_tile_position(active_tile),
+        #     )
 
         self.ui.display_player_state(
             player_health=self.player.get_health(),
             player_attack=self.player.get_attack_power(),
             items=[item.name for item in self.player.get_inventory()]
         )
+
+        self.ui.display_board(self.game_pieces.get_all_tiles())

@@ -3,7 +3,7 @@
 from typing import Any
 from ..state import State
 from ..turn_enums import StateNames, ServiceNames, ServiceMethods, Triggers
-from ....enums_and_types.enums import Rotation
+from ....enums_and_types.enums import rotation
 
 
 class PlaceTile(State):

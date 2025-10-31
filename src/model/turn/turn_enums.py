@@ -46,20 +46,21 @@ class ServiceNames(Enum):
     GAME_TIME = "gameTime"
     PLAYER = "player"
     GAME_PIECES = "gamePieces"
-    UI = "ui" #this doesn't need to be the ui
+    CONTROLLER = "controller"
 
 
 #Change the name of service methods here
 class ServiceMethods(Enum):
+    """the names of the methods that states need to call from services"""
     #for player
     GET_POSITION = "get_position"
     SET_POSITION = "set_position"
-    # for UI
+    #for controller
     GET_INPUT = "get_input_with_callback"
     #for GamePieces
     GET_TILE_EXITS = "get_tile_exits"
     GET_TILE = "get_tile"
-    DRAW_TILE = "draw_indoor_tile"
+    DRAW_TILE = "draw_tile"
     IS_NEXT_TILE_NEW = "can_move_to_new_tile"
     GET_NEXT_TILE = "get_next_tile"
     PLACE_TILE = "place_tile"

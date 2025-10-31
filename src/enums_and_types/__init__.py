@@ -1,13 +1,5 @@
-
-from .enums import (
-    Rotation,
-    Direction,
-    ItemType,
-    ItemName,
-    MessageCode
-)
-from .types import Position
-from .game_over_reason import GameOverReason
+from .types import *
+from .enums import *
 
 
 __all__ = [
@@ -18,5 +10,5 @@ __all__ = [
     'Position',
     'GameOverReason',
     'MessageCode',
-
+    'TileDict',
 ]

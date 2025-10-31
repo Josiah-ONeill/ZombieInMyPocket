@@ -1,11 +1,20 @@
-from typing import Any, Callable
-from src.enums_and_types.enums import Direction, Rotation
-from .interfaces.i_ui import IUI
+from typing import Any
+from .interfaces.i_ui import IUI, Direction, Rotation
 
 class DummyUI(IUI):
     
     def __init__(self):
         self.last_prompt = ""
+
+    def display_board(self, tiles):
+        """display a grid with the give height and width"""
+        for position, tile in tiles.items():
+            print(position, tile)
+
+    @staticmethod
+    def _get_tile(tile) -> str:
+        """displays the give tile"""
+        return str(tile)
 
     def display_message(self, message: str) -> None:
         print(message)

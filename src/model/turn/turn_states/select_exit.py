@@ -45,7 +45,7 @@ class SelectExit(State):
         tile_exits = self.get_tile_exits()
         tile_name = self._tile.get_name(),
         self.use_service(
-            ServiceNames.UI,
+            ServiceNames.CONTROLLER,
             ServiceMethods.GET_INPUT,
             prompt = f"Pick an exit on the {tile_name} tile",
             options = tile_exits,

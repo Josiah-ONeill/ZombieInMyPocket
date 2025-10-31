@@ -21,6 +21,14 @@ class Tile(ITile):
         self._encounter = encounter
         self._rotation = Rotation.NONE
 
+    def __str__(self):
+        location = f"{"Outdoors" if self._is_outdoors else "Indoors"} in the {self._name}"
+        exits = f"Exits lead {self.get_exits()}"
+        front_door = ""
+        if self._front_door is not None:
+            front_door = f"\nthe front door is to the {self.get_front_door()}"
+        return f"{location}\n{exits}{front_door}"
+
     def get_name(self) -> str:
         return self._name
 

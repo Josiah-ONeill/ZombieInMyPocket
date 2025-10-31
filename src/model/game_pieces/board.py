@@ -3,7 +3,6 @@ from src.enums_and_types import *
 
 type TileDict = dict[Position, ITile]
 
-
 class Board:
 
     def __init__(self) -> None:
