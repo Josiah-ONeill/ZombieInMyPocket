@@ -1,6 +1,6 @@
 import unittest
 
-from src.enums_and_types import ItemName
+from src.common import ItemName
 from src.model import Player
 from src.model.encounters.not_implemented_encounters import MessageEncounter, TotemEncounter
 from src.model.encounters.item_encounter import ItemEncounter

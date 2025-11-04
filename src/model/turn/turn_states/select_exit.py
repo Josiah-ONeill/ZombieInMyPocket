@@ -1,7 +1,9 @@
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, Triggers, ServiceNames, ServiceMethods
-from src.enums_and_types import Direction
+
+from src.common import Direction
+
+from ..state import State, StateNames, Triggers, ServiceNames, ServiceMethods
+
 
 class SelectExit(State):
     """Ask the user to select an exit from a give tile"""

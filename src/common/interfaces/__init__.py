@@ -14,7 +14,8 @@ from .i_tile import ITile
 from .i_game_over import IGameOver
 from .i_time import ITime
 from .i_turn import ITurn
-
+from .i_game_status import IGameStatus
+from .i_event import IEvent
 
 __all__ = [
     'IDevCard',
@@ -26,4 +27,6 @@ __all__ = [
     'IGameOver',
     'ITurn',
     'ITime',
+    'IGameStatus',
+    'IEvent',
 ]

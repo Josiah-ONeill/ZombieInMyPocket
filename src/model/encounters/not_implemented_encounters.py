@@ -1,7 +1,6 @@
 # Modified by David Watts to prevent errors in testing
 
-from ..interfaces.i_encounter import IEncounter
-from ..interfaces.i_player import IPlayer
+from src.common import IEncounter, IPlayer
 
 class MessageEncounter(IEncounter):
     """Handles Message Encounters"""

@@ -1,13 +1,10 @@
-from ..interfaces.i_dev_card import IDevCard
-from ..interfaces.i_game_pieces import IGamePieces
-from ..interfaces.i_tile import ITile
-from ..game_time.game_time import ITime
+from random import shuffle
+
+from src.common import IGamePieces, IDevCard, ITile, ITime, Direction, Position
+
 from .tile import Tile
 from .dev_card import DevCard
 from .board import Board
-from src.enums_and_types import *
-from random import shuffle
-
 
 class GamePieces(IGamePieces):
 

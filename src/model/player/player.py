@@ -5,9 +5,9 @@ all player functionality including health, combat, inventory management,
 movement, and item interactions including combinations.
 """
 
-from ..interfaces.i_player import IPlayer, Position
-from ..interfaces.i_item import IItem
-from ..item.item_helper import combine_items
+from src.common import Position, IPlayer, IItem
+
+from src.model.item import combine_items
 
 
 class Player(IPlayer):

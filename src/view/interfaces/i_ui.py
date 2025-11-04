@@ -1,5 +1,5 @@
 from typing import Protocol, Any
-from src.enums_and_types import TileDict, Rotation, Direction
+from src.common import TileDict, Rotation, Direction
 
 class IUI(Protocol):
     """Interface for the user interface."""

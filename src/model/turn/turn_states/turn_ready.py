@@ -1,7 +1,6 @@
 """Ready to start a turn"""
 from typing import Any
-from ..state import State
-from ..turn_enums import StateNames, Triggers
+from ..state import State, StateNames, Triggers
 
 #if TYPE_CHECKING:
 

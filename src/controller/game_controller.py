@@ -2,7 +2,7 @@
 #from time import sleep
 from typing import Any, Callable
 
-from src.enums_and_types import MessageCode
+from src.common import MessageCode
 from src.model import GameStatus, GamePieces, GameTime, Player, Turn
 from src.view import DummyUI
 
@@ -13,7 +13,7 @@ class GameController:
         self.game_time = GameTime()
         self.player = Player()
         self.game_pieces = GamePieces(self.game_time)
-        self.the_turn = Turn.create(self.game_pieces, self.player, self)
+        self.the_turn = Turn.create(self.game_pieces, self.player, self, self.game_time)
 
         self.input_callback = None
         self.input_prompt = ""

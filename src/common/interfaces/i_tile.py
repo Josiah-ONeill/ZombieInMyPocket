@@ -5,8 +5,8 @@ game board, including their exits, encounters, and special properties.
 """
 
 from abc import ABC, abstractmethod
-from src.enums_and_types import Direction, Rotation
-from src.model.interfaces import IEncounter
+from src.common.enums import Direction, Rotation
+from .i_encounter import IEncounter
 
 
 

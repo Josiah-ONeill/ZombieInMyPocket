@@ -1,4 +1,4 @@
-from src.model.interfaces import IEncounter, IPlayer
+from src.common import IEncounter, IPlayer
 
 class HealthEncounter(IEncounter):
     """Handles Health Encounters"""

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import cast
 
-from src.enums_and_types.enums import ItemType
+from .item_type import ItemType
 
 
 class ItemInfo(Enum):

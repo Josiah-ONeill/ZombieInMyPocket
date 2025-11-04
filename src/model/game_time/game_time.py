@@ -1,4 +1,4 @@
-from ..interfaces import ITime
+from src.common import ITime
 
 class GameTime(ITime):
     """Handles Game Time and validation"""

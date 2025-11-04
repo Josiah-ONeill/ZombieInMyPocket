@@ -5,10 +5,10 @@ components including development cards, tiles, and board placement logic.
 """
 
 from abc import ABC, abstractmethod
+from src.common.types import Position
+from src.common.enums import Direction
 from .i_dev_card import IDevCard
-from .i_tile import ITile
-from .i_time import ITime
-from src.enums_and_types import Position, Direction
+from .i_tile import  ITile
 
 
 class IGamePieces(ABC):

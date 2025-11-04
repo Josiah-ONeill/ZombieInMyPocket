@@ -1,8 +1,8 @@
 from typing import Callable, Any
 
-from src.model.game_time.game_time import GameTime
-from src.model.interfaces import ITurn
-from src.model.turn.turn_enums import ServiceNames, StateNames, Triggers
+from src.common.interfaces import ITurn
+
+from src.model.turn.turn_common import ServiceNames, StateNames, Triggers
 from src.model.turn.turn_flow import TurnFlow
 from src.model.turn.turn_states import *
 
@@ -29,7 +29,7 @@ class Turn(ITurn):
     #make the turn flow object
     @classmethod
     def create(
-            cls, the_game_pieces, the_player, the_user_interface, the_game_time = GameTime()
+            cls, the_game_pieces, the_player, the_user_interface, the_game_time
     ) -> ITurn:
         """
         Create and initialize a new turn.
