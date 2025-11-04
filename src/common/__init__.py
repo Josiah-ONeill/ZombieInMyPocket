@@ -26,4 +26,5 @@ __all__ = [
     'IGameStatus',
     'GameOverConditions',
     'IEvent',
+    'IUI',
 ]

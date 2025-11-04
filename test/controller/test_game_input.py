@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 from src.controller.game_controller import GameController
-from src.view.interfaces.i_ui import IUI
+from src.common.interfaces.i_ui import IUI
 
 class TestGameInput(unittest.TestCase):
     """User Story: Player Input Handling

@@ -1,5 +1,5 @@
 from typing import Any
-from .interfaces.i_ui import IUI, Direction, Rotation
+from src.common import IUI, Direction, Rotation
 
 class DummyUI(IUI):
     

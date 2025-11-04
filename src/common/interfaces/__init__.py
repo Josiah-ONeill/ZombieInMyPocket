@@ -16,6 +16,7 @@ from .i_time import ITime
 from .i_turn import ITurn
 from .i_game_status import IGameStatus
 from .i_event import IEvent
+from .i_ui import IUI
 
 __all__ = [
     'IDevCard',
@@ -29,4 +30,5 @@ __all__ = [
     'ITime',
     'IGameStatus',
     'IEvent',
+    'IUI'
 ]
