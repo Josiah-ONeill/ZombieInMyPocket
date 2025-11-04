@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 from src.controller.game_controller import GameController
-from src.view.interfaces.i_ui import IUI
+from src.common.interfaces.i_ui import IUI
 
 class TestGameInput(unittest.TestCase):
     """User Story: Player Input Handling
@@ -18,7 +18,8 @@ class TestGameInput(unittest.TestCase):
     def setUp(self, MockTurn, MockGamePieces, MockPlayer, MockGameTime, MockGameStatus):
         """Set up the test environment for the GameController tests."""
         self.mock_ui = Mock(spec=IUI)
-        self.game_controller = GameController(self.mock_ui)
+        self.game_controller = GameController()
+        self.game_controller.ui = self.mock_ui
         self.game_controller.game_status = MockGameStatus()
         self.game_controller.the_turn = MockTurn()
 

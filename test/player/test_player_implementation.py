@@ -598,7 +598,7 @@ class TestPlayer(unittest.TestCase):
     def test_has_totem_default(self):
         """Test totem tracking defaults to False."""
         # Assert
-        self.assertEqual(self.player.has_totem(), False)
+        self.assertEqual(self.player.has_totem, False)
 
     def test_use_item(self):
         """Test basic item usage functionality."""

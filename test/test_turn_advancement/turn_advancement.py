@@ -1,10 +1,11 @@
 import unittest
 from unittest.mock import create_autospec
 
-from src.model.game_pieces import *
+from src.model.game_pieces import GamePieces
 from src.model.game_time.game_time import GameTime
-from src.model.turn import *
-from src.view.dummy_ui import DummyUI
+from src.model.turn import Turn
+from src.model.turn.turn_common import Triggers
+from src.controller import GameController
 from src.common.interfaces import IPlayer
 
 
@@ -16,7 +17,7 @@ class TestTurnAdvancement(unittest.TestCase):
     """
     def setUp(self):
         """set up a turn to test"""
-        self.user_interface = create_autospec(DummyUI)
+        self.user_interface = create_autospec(GameController)
         self.player = create_autospec(IPlayer)
         self.game_time = GameTime()
         self.game_pieces = GamePieces(self.game_time)

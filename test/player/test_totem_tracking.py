@@ -24,13 +24,13 @@ class TestTotemTracking(unittest.TestCase):
         Then the system shows the player is holding the totem
         """
         # Arrange
-        self.assertFalse(self.player.has_totem())  # Initial state
+        self.assertFalse(self.player.has_totem)  # Initial state
 
         # Act
         self.player.set_has_totem(True)
 
         # Assert
-        self.assertTrue(self.player.has_totem())
+        self.assertTrue(self.player.has_totem)
 
     def test_totem_drop_failure(self):
         """Acceptance Criteria (Failure):
@@ -40,10 +40,10 @@ class TestTotemTracking(unittest.TestCase):
         """
         # Arrange
         self.player.set_has_totem(True)
-        self.assertTrue(self.player.has_totem())  # Confirm initial state
+        self.assertTrue(self.player.has_totem)  # Confirm initial state
 
         # Act
         self.player.set_has_totem(False)
 
         # Assert
-        self.assertFalse(self.player.has_totem())
+        self.assertFalse(self.player.has_totem)

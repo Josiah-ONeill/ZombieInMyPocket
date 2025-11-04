@@ -1,10 +1,10 @@
 from typing import Protocol, Any
-from src.common import TileDict, Rotation, Direction
+from src.common.enums import Rotation, Direction
 
 class IUI(Protocol):
     """Interface for the user interface."""
 
-    def display_board(self, tiles: TileDict) -> None:
+    def display_board(self, board) -> None:
         """display a grid with the give height and width"""
         ...
 

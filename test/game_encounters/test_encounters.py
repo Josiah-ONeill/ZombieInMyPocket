@@ -2,12 +2,8 @@ import unittest
 
 from src.common import ItemName
 from src.model import Player
-from src.model.encounters.not_implemented_encounters import MessageEncounter, TotemEncounter
-from src.model.encounters.item_encounter import ItemEncounter
-from src.model.encounters.combat_encounter import CombatEncounter
-from src.model.encounters.cower_encounter import CowerEncounter
-from src.model.encounters.health_encounter import HealthEncounter
 from src.model.item import get_item
+from src.model.encounters import *
 
 
 class TestEncounters(unittest.TestCase):

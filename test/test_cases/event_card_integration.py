@@ -1,6 +1,6 @@
 import unittest
 
-from src.model import DevCard
+from src.model.game_pieces import DevCard
 
 class EventCardIntegration(unittest.TestCase):
     """

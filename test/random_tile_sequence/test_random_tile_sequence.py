@@ -6,7 +6,7 @@
 
 from unittest import TestCase
 from src.model.game_pieces import GamePieces
-from src.model.game_time.game_time import GameTime
+from src.model.game_time import GameTime
 
 
 class TestRandomTileSequence(TestCase):
