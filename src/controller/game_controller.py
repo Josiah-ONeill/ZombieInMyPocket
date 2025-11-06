@@ -3,7 +3,7 @@
 from typing import Any, Callable
 
 from src.common import MessageCode
-from src.model import GameStatus, GamePieces, GameTime, Player, Turn
+from src.model import GameStatus, GamePieces, GameTime, Player, Turn, EncounterContext
 from src.view import DummyUI
 
 class GameController:
@@ -12,6 +12,7 @@ class GameController:
         self.ui = DummyUI()
         self.game_time = GameTime()
         self.player = Player()
+        self.encounter_context = EncounterContext(self.player)
         self.game_pieces = GamePieces(self.game_time)
         self.the_turn = Turn.create(self.game_pieces, self.player, self, self.game_time)
 

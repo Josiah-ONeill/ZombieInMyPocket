@@ -3,6 +3,7 @@ from .game_pieces import GamePieces
 from .turn import Turn
 from .game_time import GameTime
 from .game_status import GameStatus
+from .encounters import EncounterContext
 
 __all__ = [
     'Player',
@@ -10,5 +11,6 @@ __all__ = [
     'Turn',
     'GameTime',
     'GameStatus',
+    'EncounterContext',
 
 ]
