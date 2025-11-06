@@ -3,7 +3,7 @@ from unittest.mock import create_autospec
 
 
 from src.model.turn.turn_common import Triggers
-from src.model import Player, GameTime, GamePieces, Turn
+from src.model import Player, GameTime, GamePieces, Turn, EncounterContext
 from src.controller import GameController
 
 
@@ -16,11 +16,13 @@ class TestTurn(unittest.TestCase):
         self.player = create_autospec(Player())
         self.game_time = create_autospec(GameTime())
         self.game_pieces = create_autospec(GamePieces(self.game_time))
+        self.encounter = create_autospec(EncounterContext(self.player))
         self.the_turn = Turn.create(
             self.game_pieces,
             self.player,
             self.user_interface,
-            self.game_time
+            self.game_time,
+            self.encounter
         )
 
 

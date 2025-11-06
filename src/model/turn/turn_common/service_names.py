@@ -5,4 +5,5 @@ class ServiceNames(Enum):
     GAME_TIME = "gameTime"
     PLAYER = "player"
     GAME_PIECES = "gamePieces"
+    ENCOUNTERS = "encounter_context"
     CONTROLLER = "controller"

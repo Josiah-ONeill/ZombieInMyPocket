@@ -29,7 +29,12 @@ class Turn(ITurn):
     #make the turn flow object
     @classmethod
     def create(
-            cls, the_game_pieces, the_player, the_user_interface, the_game_time
+            cls,
+            the_game_pieces,
+            the_player,
+            controller,
+            the_game_time,
+            the_encounter
     ) -> ITurn:
         """
         Create and initialize a new turn.
@@ -37,8 +42,9 @@ class Turn(ITurn):
         Args:
             the_game_pieces: The game pieces involved in the turn.
             the_player: The player object.
-            the_user_interface: The user interface to handle input/output.
-            the_game_time: The game time, optional for compatibility only.
+            controller: The user interface to handle input/output.
+            the_game_time: The game time.
+            the_encounter: The encounters that plays find from dev cards and tiles
 
         Returns:
             Turn: An initialized Turn instance with its turn flow set up.
@@ -46,8 +52,9 @@ class Turn(ITurn):
         services = cls._get_services(
             the_game_pieces,
             the_player,
-            the_user_interface,
-            the_game_time
+            controller,
+            the_game_time,
+            the_encounter
         )
 
         states = cls._get_turn_states()
@@ -68,14 +75,16 @@ class Turn(ITurn):
             the_game_pieces,
             the_player,
             the_controller,
-            the_game_time
+            the_game_time,
+            the_encounter
     ) -> dict[ServiceNames, object]:
         """Get the services used by the turn"""
         return {
             ServiceNames.GAME_PIECES:   the_game_pieces,
             ServiceNames.PLAYER:        the_player,
             ServiceNames.CONTROLLER:    the_controller,
-            ServiceNames.GAME_TIME:     the_game_time
+            ServiceNames.GAME_TIME:     the_game_time,
+            ServiceNames.ENCOUNTERS:    the_encounter
         }
 
     @classmethod

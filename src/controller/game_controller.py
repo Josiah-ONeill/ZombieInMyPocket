@@ -14,8 +14,7 @@ class GameController:
         self.player = Player()
         self.encounter_context = EncounterContext(self.player)
         self.game_pieces = GamePieces(self.game_time)
-        self.the_turn = Turn.create(self.game_pieces, self.player, self, self.game_time)
-
+        self.the_turn = Turn.create(self.game_pieces, self.player, self, self.game_time, self.encounter_context)
         self.input_callback = None
         self.input_prompt = ""
         self.input_options = ""

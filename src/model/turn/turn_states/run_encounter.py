@@ -1,4 +1,4 @@
-from ..state import State, StateNames, ServiceNames, Triggers
+from ..state import State, StateNames, ServiceNames, ServiceMethods, Triggers
 
 class RunEncounter(State):
     """Runs the encounter from the previous state"""
@@ -12,11 +12,18 @@ class RunEncounter(State):
 
 
     def handle_request(self):
-        self._encounter.handle_encounter(
-            self.context._get_service(ServiceNames.PLAYER)
-        )
+        self.set_encounter()
+        self.run_encounter()
         self.result = self.get_result()
         super().handle_request()
+
+
+    def set_encounter(self):
+        self.use_service(ServiceNames.ENCOUNTERS, ServiceMethods.SET_ENCOUNTER, self._encounter)
+
+    def run_encounter(self):
+        self.use_service(ServiceNames.ENCOUNTERS, ServiceMethods.HANDLE_ENCOUNTER)
+
 
     def get_result(self) -> Triggers | None:
         out_put = None
@@ -24,6 +31,7 @@ class RunEncounter(State):
             #the next encounter will be a tile so need to get the tile
             out_put = (Triggers.START_TILE_ENCOUNTER, )
         return out_put
+
 
     def exit(self):
         super().exit()

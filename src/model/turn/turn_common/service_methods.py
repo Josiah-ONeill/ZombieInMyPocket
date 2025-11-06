@@ -19,5 +19,8 @@ class ServiceMethods(Enum):
     GET_TILE_POSITION = "get_tile_position"
     DRAW_DEV_CARD = "draw_dev_card"
     GET_ENCOUNTER = "get_encounter"
+    # for Encounter
+    HANDLE_ENCOUNTER = "handle_encounter"
+    SET_ENCOUNTER = "set_encounter"
     # for GameTime
     GET_CURRENT_TIME = "get_current_time"
