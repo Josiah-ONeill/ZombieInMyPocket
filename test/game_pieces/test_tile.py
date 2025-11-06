@@ -1,6 +1,10 @@
-from src.model.game_pieces import Tile
 import unittest
-from src.common import *
+
+from src.common import Direction, Rotation, IEncounter
+
+from src.model.game_pieces import Tile
+
+from src.model.encounters import HealthEncounter
 
 
 class TestTile(unittest.TestCase):
@@ -11,7 +15,7 @@ class TestTile(unittest.TestCase):
             False,
             (Direction.WEST, Direction.NORTH, Direction.EAST),
             None,
-            None
+            HealthEncounter(3)
         )
 
         self.patio_tile = Tile(
@@ -94,3 +98,13 @@ class TestTile(unittest.TestCase):
         self.patio_tile.set_rotation(Rotation.UPSIDE_DOWN)
         self.assertEqual(self.patio_tile.get_front_door(),
                          Direction.SOUTH)
+    
+    def test_get_string(self):
+        the_string = str(self.patio_tile).lower()
+        self.assertTrue(all(
+            word in the_string for word in ['outdoors', 'patio', 'front door']
+            ))
+
+    def test_get_encounter(self):
+        the_encounter = self.family_room_tile.get_encounter()
+        self.assertTrue(isinstance(the_encounter, IEncounter))
